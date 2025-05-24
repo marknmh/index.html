@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TayCI Mobile UI</title>
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TayCI Mobile UI</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #dcdcdc;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 0;
+      min-height: 100vh;
+    }
+    .chat-container {
+      width: 100%;
+      max-width: 375px;
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-header {
+      background-color: #0084ff;
+      color: white;
+      padding: 15px;
+      font-weight: bold;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+    .chat-header img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .welcome-message {
+      padding: 15px;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .faq-label {
+      padding: 0 15px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      padding: 0 15px;
+    }
+    .faq-item {
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: background 0.2s;
+    }
+    .faq-item:hover {
+      background-color: #eaeaea;
+    }
+    .faq-item span {
+      font-size: 15px;
+      color: #333;
+    }
+    .faq-arrow {
+      font-size: 18px;
+      color: #aaa;
+    }
+    .chat-box {
+      padding: 15px;
+      max-height: 300px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .message {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+      animation: fadeIn 0.5s ease-out;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .user-message {
+      background-color: #dcf8c6;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+    .bot-message {
+      background-color: #f1f0f0;
+      align-self: flex-start;
+      margin-right: auto;
+    }
+    .bot-message.with-logo {
+      padding-left: 36px;
+      position: relative;
+    }
+    .bot-message.with-logo::before {
+      content: '';
+      background-image: url('C:\Users\lecni\OneDrive\Desktop\HTML\logo.jpg');
+      background-size: cover;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      position: absolute;
+      left: 8px;
+      top: 10px;
+    }
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+      padding: 10px;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+    .chat-input button {
+      background-color: #0084ff;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      margin-left: 10px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    button {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <img src="C:\Users\lecni\OneDrive\Desktop\HTML\logo.jpg" alt="TayCI Logo" />
+      <span>TayCI</span>
+    </div>
+    <div class="welcome-message">
+      Hi, I'm TayCI, your virtual assistant from SLSU Tayabas Campus. Select an option below or type your inquiry.
+    </div>
+    <div class="faq-label">You may want to ask:</div>
+    <div class="faq-list">
+      <div class="faq-item" role="button" aria-label="About Enrollment" onclick="faqClick('About Enrollment')"><span>About Enrollment?</span><span class="faq-arrow">›</span></div>
+      <div class="faq-item" role="button" aria-label="About Admission" onclick="faqClick('About Admission')"><span>About Admission?</span><span class="faq-arrow">›</span></div>
+      <div class="faq-item" role="button" aria-label="About Entrance Exam" onclick="faqClick('About Entrance Exam')"><span>About Entrance Exam?</span><span class="faq-arrow">›</span></div>
+      <div class="faq-item" role="button" aria-label="Academic Calendar" onclick="faqClick('Academic Calendar')"><span>Academic Calendar</span><span class="faq-arrow">›</span></div>
+      <div class="faq-item" role="button" aria-label="How to get School ID" onclick="faqClick('How to get School ID?')"><span>How to get School ID?</span><span class="faq-arrow">›</span></div>
+      <div class="faq-item" role="button" aria-label="How to get Admission Slip" onclick="faqClick('How to get Admission Slip?')"><span>How to get Admission Slip?</span><span class="faq-arrow">›</span></div>
+      <div class="faq-item" role="button" aria-label="How to Request TOR" onclick="faqClick('How to Request TOR?')"><span>How to request TOR?</span><span class="faq-arrow">›</span></div>
+      <div class="faq-item" role="button" aria-label="How to get Good Moral Certificate" onclick="faqClick('How to get Good Moral Certificate?')"><span>How to get Good Moral Certificate?</span><span class="faq-arrow">›</span></div>
+    </div>
+    <div class="chat-box"></div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type your concern here..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+<script>
+  const chatBox = document.querySelector(".chat-box");
+  let currentAction = null;
+
+ function displayMessage(sender, text, showLogo = false) {
+
+
+    const msg = document.createElement("div");
+    msg.className = `message ${sender === "user" ? "user-message" : "bot-message"}`;
+    if (sender === "bot" && showLogo) {
+      msg.classList.add("with-logo");
+    }
+
+    if (sender === "bot") {
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      text = text.replace(urlRegex, function (url) {
+        return `<a href="${url}" target="_blank" style="color:#0084ff;text-decoration:underline;">${url}</a>`;
+      });
+      msg.innerHTML = text;
+    } else {
+      msg.textContent = text;
+    }
+
+    chatBox.appendChild(msg);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function faqClick(message) {
+    document.getElementById("userInput").value = message;
+    sendMessage();
+  }
+
+  function sendMessage() {
+    const input = document.getElementById("userInput");
+    const message = input.value.trim();
+    if (message === "") return;
+
+    displayMessage("user", message);
+    const msgLower = message.toLowerCase();
+
+    if (msgLower.includes("admission slip")) {
+      setTimeout(() => {
+        displayMessage("bot", "To get an Admission Slip:");
+        displayMessage("bot", "1. Submit a letter stating why you need an admission slip (e.g., reason for absence).");
+        displayMessage("bot", "2. Have the letter signed by a parent or guardian.");
+        displayMessage("bot", "3. Submit it to the Admin Office and wait a few minutes for processing.");
+      }, 500);
+    } else if (msgLower.includes("admission")) {
+      setTimeout(() => {
+        displayMessage("bot", "What do you want to know about Admission?");
+        showAdmissionButtons();
+      }, 500);
+    } else if (msgLower.includes("enrollment")) {
+      setTimeout(() => {
+        displayMessage("bot", "Enrollment for incoming students starts on June 1, 2025.");
+        displayMessage("bot", "Do you want to know the requirements for enrollment?");
+        showYesNoButtons("enrollmentRequirements");
+      }, 500);
+    } else if (msgLower.includes("tor")) {
+      setTimeout(() => {
+        displayMessage("bot", "To request your Transcript of Records (TOR), you have two options:");
+        displayMessage("bot", "OPTION 1: Fill out the online form");
+        displayMessage("bot", "1. Fill out this request form:");
+        displayMessage("bot", "formm.php");
+        displayMessage("bot", "2. After submitting, wait for a text or email from the registrar.");
+
+        setTimeout(() => {
+          displayMessage("bot", "OPTION 2: Visit the Registrar's Office");
+          displayMessage("bot", "1. Go to the registrar’s office.");
+          displayMessage("bot", "2. Fill out the TOR request form.");
+          displayMessage("bot", "3. Submit your receipt and completed form.");
+        }, 1000);
+      }, 500);
+    } else if (msgLower.includes("good moral")) {
+      setTimeout(() => {
+        displayMessage("bot", "To get a Good Moral Certificate:", true);
+        displayMessage("bot", "1. Go to the Guidance Office.");
+        displayMessage("bot", "2. Request and fill out the Good Moral Certificate form.");
+        displayMessage("bot", "3. Or you can fill it online here:");
+        displayMessage("bot", "https://forms.gle/yourGoodMoralFormLinkHere");
+        displayMessage("bot", "4. Submit any required documents.");
+        displayMessage("bot", "5. Wait for processing, then claim your certificate.");
+
+        setTimeout(() => {
+          displayMessage("bot", "Do you still have any questions?");
+          showYesNoButtons("afterGoodMoral");
+        }, 1000);
+      }, 500);
+    } else if (msgLower.includes("entrance exam")) {
+      setTimeout(() => {
+        displayMessage("bot", "About Entrance Exam:", true);
+        displayMessage("bot", "1. The entrance exam schedule is posted on the");
+        displayMessage("bot", "https://www.facebook.com/slsutayabascampus");
+        chatBox.scrollTop = chatBox.scrollHeight;
+        displayMessage("bot", "3. Exam venue: SLSU Tayabas Campus, main building.");
+
+        setTimeout(() => {
+          displayMessage("bot", "Do you still have questions about the entrance exam?");
+          showYesNoButtons("afterEntranceExam");
+        }, 500);
+      }, 500);
+    } else if (msgLower.includes("academic calendar")) {
+      displayMessage("bot", "The academic calendar can be accessed via the official page of SLSU or announced through student portals.");
+    } else if (msgLower.includes("school id")) {
+      displayMessage("bot", "To get your School ID:");
+      displayMessage("bot", "1) Proceed to the registrar's office.");
+      displayMessage("bot", "2) Submit 2x2 photo and Registration form.");
+    } else if (msgLower.includes("certificate of enrollment")) {
+      displayMessage("bot", "Visit the registrar’s office and request a Certificate of Enrollment. Bring your valid ID and proof of registration.");
+    } else if (msgLower.includes("certificate of good moral")) {
+      // Intentional fallback or duplicate logic
+    } else if (msgLower === "yes" || msgLower === "no") {
+      if (!currentAction) return;
+      msgLower === "yes" ? handleYesResponse() : handleNoResponse();
+    }else{
+       setTimeout(() => {
+    displayMessage("bot", "I'm sorry, I can't assist with that question right now.");
+    displayMessage("bot", "Please contact the admin for further assistance:");
+    displayMessage("bot", "https://www.facebook.com/slsutayabascampus");
+  }, 500);
+    }
+
+
+    input.value = "";
+  }
+
+  function showAdmissionButtons() {
+    const options = document.createElement("div");
+    options.style.display = "flex";
+    options.style.flexDirection = "column";
+    options.style.gap = "5px";
+    options.style.marginTop = "10px";
+
+    const buttons = [
+      {
+        text: "Date of Application",
+        action: () => {
+          displayMessage("bot", "Date of application: March 9 to 14, 2025.");
+          setTimeout(() => {
+            displayMessage("bot", "Do you want to know what program offers?");
+            showYesNoButtons("programInquiry");
+          }, 500);
+        }
+      },
+      {
+        text: "Program Offerings",
+        action: () => {
+          showProgramList();
+        }
+      },
+      {
+        text: "Requirements for Admission",
+        action: () => {
+          displayMessage("bot", "Here are the requirements for admission:");
+          displayMessage("bot", "1. 2x2 Picture");
+          displayMessage("bot", "2. Academic Record (card/TOR)");
+          displayMessage("bot", "3. Certificate of income of both parents/guardian");
+          displayMessage("bot", "4. Certificate of residency");
+
+          setTimeout(() => {
+            displayMessage("bot", "Do you want to fill out the application form?");
+            showYesNoButtons("fillFormDecision");
+          }, 500);
+        }
+      }
+    ];
+
+    buttons.forEach(btn => {
+      const b = document.createElement("button");
+      b.textContent = btn.text;
+      b.style.padding = "6px 12px";
+      b.style.borderRadius = "20px";
+      b.style.border = "none";
+      b.style.backgroundColor = "#0084ff";
+      b.style.color = "white";
+      b.style.cursor = "pointer";
+      b.onclick = () => {
+        options.remove();
+        btn.action();
+      };
+      options.appendChild(b);
+    });
+
+    chatBox.appendChild(options);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function showProgramList() {
+    displayMessage("bot", "List of Program Offerings:");
+    displayMessage("bot", "1. BS in Agriculture major in Crop Science");
+    displayMessage("bot", "2. BS in Hospitality Management");
+    displayMessage("bot", "3. BS in Industrial Technology major in Computer Technology");
+
+    setTimeout(() => {
+      displayMessage("bot", "Do you still have questions about admission?");
+      showYesNoButtons("afterFormDecision");
+    }, 1000);
+  }
+
+ function handleYesResponse() {
+  console.log("Yes clicked. Current Action:", currentAction);
+
+  if (currentAction === "programInquiry") {
+    showProgramList();
+  } else if (currentAction === "fillFormDecision") {
+    displayMessage("bot", "Great! You can fill the form here:");
+    displayMessage("bot", "https://forms.gle/yourFormLinkHere");
+
+    setTimeout(() => {
+      displayMessage("bot", "Do you still have questions about admission?");
+      showYesNoButtons("afterFormDecision");
+    }, 1000);
+  } else if (currentAction === "afterFormDecision") {
+    displayMessage("bot", "Okay, you are free to ask a question.");
+    showAdmissionButtons();
+  } else if (currentAction === "enrollmentRequirements") {
+    displayMessage("bot", "Enrollment Requirements:");
+    displayMessage("bot", "1. Form 137 / Report Card");
+    displayMessage("bot", "2. PSA Birth Certificate");
+    displayMessage("bot", "3. 2x2 ID Picture");
+    displayMessage("bot", "4. Certificate of Good Moral Character");
+    displayMessage("bot", "5. Police Clearance");
+
+    setTimeout(() => {
+      displayMessage("bot", "Do you still have questions?");
+      showYesNoButtons("afterEnrollmentInfo");
+    }, 1000);
+  } else if (currentAction === "afterEnrollmentInfo") {
+    displayMessage("bot", "Okay, what do you want to ask?");
+  } 
+  
+  else if (currentAction === "afterGoodMoral" || currentAction === "afterEntranceExam") {
+    displayMessage("bot", "Sure! What else would you like to know?");
+  }
+}
+
+function handleNoResponse() {
+  console.log("No clicked. Current Action:", currentAction);
+
+  if (["programInquiry", "fillFormDecision"].includes(currentAction)) {
+    displayMessage("bot", "Okay!, Let me know if you need help with anything.");
+    showAdmissionButtons();
+  } else if (currentAction === "afterFormDecision") {
+    displayMessage("bot", "Okay! Let me know if you need help with anything.");
+    document.querySelector(".faq-list").style.display = "block";
+  } else if (["enrollmentRequirements", "afterEnrollmentInfo"].includes(currentAction)) {
+    displayMessage("bot", "Okay! Let me know if you need help with anything else.");
+    document.querySelector(".faq-list").style.display = "block";
+  } 
+ 
+  else if (currentAction === "afterGoodMoral" || currentAction === "afterEntranceExam") {
+    displayMessage("bot", "Alright! Feel free to ask if you need anything else.");
+    document.querySelector(".faq-list").style.display = "block";
+  }
+}
+
+
+  function showYesNoButtons(action) {
+    currentAction = action;
+    console.log("Set currentAction to:", currentAction);
+
+    const options = document.createElement("div");
+    options.style.display = "flex";
+    options.style.gap = "10px";
+    options.style.marginTop = "10px";
+
+    ["Yes", "No"].forEach(answer => {
+      const btn = document.createElement("button");
+      btn.textContent = answer;
+      btn.style.padding = "6px 12px";
+      btn.style.border = "none";
+      btn.style.borderRadius = "20px";
+      btn.style.backgroundColor = answer === "Yes" ? "#0084ff" : "#ccc";
+      btn.style.color = "white";
+      btn.style.cursor = "pointer";
+      btn.onclick = () => {
+        document.getElementById("userInput").value = answer;
+        options.remove();
+        sendMessage();
+      };
+      options.appendChild(btn);
+    });
+
+    chatBox.appendChild(options);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  document.getElementById("userInput").addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      sendMessage();
+    }
+  });
+</script>
+
+</body>
+</html>
